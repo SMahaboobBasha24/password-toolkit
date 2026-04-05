@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Password Toolkit</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:#1e293b;
+padding:30px;
+border-radius:10px;
+width:350px;
+text-align:center;
+}
+
+input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:6px;
+margin-top:10px;
+}
+
+button{
+margin-top:10px;
+padding:10px;
+width:100%;
+border:none;
+background:#22c55e;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+#strength{
+margin-top:10px;
+font-weight:bold;
+}
+
+#generated{
+margin-top:10px;
+background:#334155;
+padding:10px;
+border-radius:6px;
+word-break:break-all;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🔐 Password Toolkit</h2>
+
+<input type="password" id="password" placeholder="Type password" onkeyup="checkStrength()">
+
+<div id="strength"></div>
+
+<button onclick="generate()">Generate Strong Password</button>
+
+<div id="generated"></div>
+
+<button onclick="copy()">Copy Password</button>
+
+</div>
+
+<script>
+
+function checkStrength(){
+
+let p = document.getElementById("password").value
+let strength = 0
+
+if(p.length >= 8) strength++
+if(/[A-Z]/.test(p)) strength++
+if(/[0-9]/.test(p)) strength++
+if(/[^A-Za-z0-9]/.test(p)) strength++
+
+let msg = ""
+
+if(strength <= 1) msg = "Weak ❌"
+else if(strength == 2) msg = "Moderate ⚠️"
+else if(strength == 3) msg = "Strong 💪"
+else msg = "Very Strong 🔥"
+
+document.getElementById("strength").innerText = msg
+
+}
+
+function generate(){
+
+let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
+let pass = ""
+
+for(let i=0;i<12;i++){
+pass += chars[Math.floor(Math.random()*chars.length)]
+}
+
+document.getElementById("generated").innerText = pass
+
+}
+
+function copy(){
+
+let text = document.getElementById("generated").innerText
+
+navigator.clipboard.writeText(text)
+
+alert("Copied!")
+
+}
+
+</script>
+
+</body>
+</html>
